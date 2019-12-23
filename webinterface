@@ -15,7 +15,11 @@
 =cut
 
 use Economizer;
-my $Economizer = Economizer->new($db, $admin, \%conf);
+our ($db, $admin, %conf, %lang, $html);
+our Economizer $Economizer = Economizer->new($db, $admin, \%conf);
+
+
+
 #**********************************************************
 =head2 o_main($attr)
 
@@ -112,6 +116,10 @@ sub e_user {
     $INFORMATION{ID}       = "$FORM{chg}";
   }
 
+
+
+
+
   if ($FORM{del}) {
     $Economizer->del_user_info({ ID => $FORM{del} });
     if (!$Economizer->{errno}) {
@@ -176,6 +184,7 @@ sub e_user {
       TOTAL         => 1
     }
   );
+
 
   return 1;
 }
@@ -413,4 +422,78 @@ sub e_tariffs {
   return 1;
 }
 
+
+
+
+  sub site104 {
+use LWP::UserAgent;
+use CGI::Cookie;
+use HTTP::Request::Common;
+use HTML::Parser ();
+use HTTP::Cookies;
+use Data::Dumper;
+use Modern::Perl;
+use WWW::Mechanize;
+use HTML::TableExtract;
+use File::Basename;
+use File::Fetch;
+use CGI::Cookie;
+
+use base "HTML::Parser";
+
+  $html->tpl_show(
+    _include('economizer_add_from_104', 'Economizer'),
+    {
+      
+    }
+  );
+
+if ($FORM{load}){
+
+
+
+
+my $ua = LWP::UserAgent->new();
+my %data = (  _username => 'procuk1944@gmail.com',
+_password => 'hEoP7SgG');
+my $url = "https://104.ua/ua/cabinet#type=individual";   
+my $req = HTTP::Request::Common::POST( $url, [ %data ] );
+my $response = $ua->request($req);
+#Abills::Base::_bp('', $response, {HEADER=>1});
+#my $resp = $response->content;
+
+my $header = ['Cookie' => $response->{'_headers'}{'set-cookie'}[0], 
+                   'Content-type' => 'application/x-www-form-urlencoded'];
+
+my $url_api = "https://104.ua/ua/cabinet/subscription_feemethod/getRecalculatedData";  
+my $data_api = "ppage=2&per_page=20&type=recalculateData&value=m&page_name=subscription_fee";
+
+
+my $req_api = HTTP::Request->new('POST', $url_api, $header, $data_api);
+my $response_api = $ua->request($req_api);
+Abills::Base::_bp('', $response_api->{'_content'}, {HEADER=>1});
+
+
+
+
+
+$_ = $response_api->{'_content'};
+m/<td class=\\"second\\">(.+)<\\\/td>/;
+print "Content-type: text/html\n\n";
+print 'value' . $1;
+
+Abills::Base::_bp('', $response, {HEADER=>1});
+
+}
+
+
+
+
+
+#while ($response_api->{'_content'} =~ m/<td class="first">(.+)<\/td>/g) {
+#$response->{_content} =~ 
+#my $value = $response_api =~ 
+#$1;
+#}
+}
 1;
