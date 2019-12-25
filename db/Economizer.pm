@@ -335,4 +335,51 @@ sub info_user_info {
   return $self->{list}->[0];
 }
 
+#**********************************************************
+=head2 add_user_info() - adding counters data for date
+
+
+  Arguments:
+
+  Returns:
+
+
+  Examples:
+    $Economizer->add_user_info({%FORM});
+
+=cut
+#**********************************************************
+sub add_user_metric104 {
+  my $self = shift;
+  my ($attr) = @_;
+  $self->query_add('economizer_metric104', {%$attr});
+  return $self;
+}
+
+#**********************************************************
+
+
+
+
+#**********************************************************
+=head2 clear_metric104
+
+
+  Arguments:
+
+  Returns:
+
+  Examples:
+
+
+=cut
+#**********************************************************
+sub clear_metric104 {
+  my $self = shift;
+  $self->query_del('economizer_metric104', {},
+  {CLEAR_TABLE => 1} );
+  return $self;
+}
+
+#**********************************************************
 1;
