@@ -21,5 +21,10 @@ $lang{STATISTICS}='Статистика';
 $lang{NO_PUBLIC_UTILITIES_FOR_THIS_YEAR}='За вибраний рік немає заповненних показників';
 $lang{SPENT_MONEY_FOR_PUB_UTILITIES_FOR_PERIODS}='Витрачені гроші на комунальні послуги за періоди';
 $lang{DIFFERENCE_PUBLIC_UTILITIES_FOR_PERIODS}='Різниця показників лічильника за періоди';
+$lang{DATA_FROM104}='Дані із сайту 104.ua';
+$lang{COUNTER_NUMBER}='Номер лічильника';
+$lang{DATE_ADD_INDICATOR}='Дата';
+$lang{INDICATOR}='Показник';
+$lang{COUNTER_HISTORY}='Історія показників лічильника газу';
 $lang{AMOUNT_MONEY_SPENT}='Сума витрачених грошей';
 1

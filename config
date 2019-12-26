@@ -7,4 +7,4 @@
 %USER_FUNCTION_LIST = ("01:0:$lang{ECONOMIZER}:null:"           => 0,
                        "02:1:$lang{ECONOMIZER}:e_user:"         => 0,
                        "03:1:$lang{STATISTICS}:e_statistics:"  => 0,
-                       "04:1:$lang{L0AD}:site104:"         => 0,);
+                       "04:1:$lang{DATA_FROM104}:site104:"         => 0,);
