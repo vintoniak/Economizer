@@ -469,6 +469,7 @@ sub site104 {
     my $data_api     = "ppage=" . $page_calc . "&per_page=20&type=recalculateData&value=m&page_name=subscription_fee";
     my $req_api      = HTTP::Request->new('POST', $url_api, $header, $data_api);
     my $response_api = $ua->request($req_api);
+  # Abills::Base::_bp('', $response_api->{content},{HEADER=>1});
 
     # Parse html table with the history of indicators
     while ($response_api->{'_content'} =~ m/(<td class=\\"first\\">\\u2116)(.+?)(<\\\/td>)(\\n +<td class=\\\"second\\\">)(.+?)(<\\\/td>)(\\n +<td class=\\\"third\\\">)(.+?)(<\\\/td>\\n)( +<td class=\\\"four\\\">)(.+?)(<\\\/td>)/g) {
@@ -492,7 +493,7 @@ sub site104 {
   }
 
   # Take data from db
-  my $list = $Economizer->take_indicators();
+  my $list = $Economizer->take_indicators104();
   print "Content-Type: text/html\n\n";
 
   # Add data to the table
@@ -508,15 +509,82 @@ sub site104 {
 
   print $table ->show();
 
+# Parse data of payment
+ #Add header of table
+  my $table_pay = $html->table(
+    {
+      width   => '100%',
+      caption => $lang{PAYMENT_HISTORY},
+      border  => 2,
+      title   => [ 'id',  $lang{DATE_PAY}, $lang{VALUE_GRN}, '-', '-' ],
+      cols_align => [ 'center', 'center', 'center',  ],
+      ID         => 'COMPANY_ID',
+
+    }
+  );
+
+
+
+ my $url_api   = "https://104.ua/ua/cabinet/consumers-bookmethod/getPaymentsData";
+  my $page_calc = 1;
+
+  # Content analysis of the page with payment history
+   while ($ua->request(HTTP::Request->new('POST', $url_api, $header, "ppage=" . $page_calc . "&per_page=5&type=summaryData&page_name=subscription_fee"))->{'_content'} =~ m/(<td class=\\\"third\\\">)(.+?)( \\u0433\\u0440\\u043d<\\\/td>)/g) {
+
+  my $data_api     = "ppage=" . $page_calc ."&per_page=5&type=summaryData&page_name=subscription_fee";
+  my $req_api      = HTTP::Request->new('POST', $url_api, $header, $data_api);
+  my $response_api = $ua->request($req_api);
+  my $i = 0;
+  my @array =();
+  my @array2 =();
+  # Parse data of payment
+  while ($response_api->{'_content'} =~ m/(class=\\\"second\\\"><span class=\\\"hide-word\\\">\\u0432\\u0456\\u0434<\\\/span> )(.+?)(<\\\/td>)/g) {
+    push(@array, $2);
+    $i++;
+  }
+  # Parse value of payment
+  while ($response_api->{'_content'} =~ m/(<td class=\\\"third\\\">)(.+?)( \\u0433\\u0440\\u043d<\\\/td>)/g) {
+    push(@array2, $2);
+  }
+  # Add data to db
+  for (my $value = 0 ; $value < $i ; $value++) {
+    my $value_date_reg = $array[$value];
+    my @value_date;
+    @value_date = split(/(.*?)\.(.*?)\.(.*)/, $value_date_reg);
+    my $date_sql = @value_date[3] . '-' . @value_date[2] . '-' . @value_date[1];
+
+    $Economizer->add_user_payment104(
+      {
+
+        DATE    => $date_sql,
+        PAYMENT => $array2[$value],
+      }
+    );
+
+  }
+
+  $page_calc++;
+
+  }
+
+  # Take data from db
+   my $list = $Economizer->take_payment104();
+  # print "Content-Type: text/html\n\n";
+
+  # Add data to the table
+  foreach my $line (@$list) {
+
+    my @fields_array = ();
+   push @fields_array, $line->["0"];
+    push @fields_array, $line->["1"];
+    push @fields_array, $line->["2"];
+    push @fields_array, $table_pay->addrow(@fields_array);
+   }
+
+   print $table_pay ->show();
+
+
 }
-
-
-
-
-
-
-
-
 
 
 

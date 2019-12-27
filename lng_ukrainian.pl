@@ -27,4 +27,7 @@ $lang{DATE_ADD_INDICATOR}='Дата';
 $lang{INDICATOR}='Показник';
 $lang{COUNTER_HISTORY}='Історія показників лічильника газу';
 $lang{AMOUNT_MONEY_SPENT}='Сума витрачених грошей';
+$lang{PAYMENT_HISTORY}='Історія оплат';
+$lang{DATE_PAY}='Дата оплати';
+$lang{VALUE_GRN}='Сума, грн';
 1

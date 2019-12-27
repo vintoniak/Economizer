@@ -28,4 +28,7 @@ $lang{COUNTER_NUMBER}='Номер счетчика';
 $lang{DATE_ADD_INDICATOR}='Дата';
 $lang{INDICATOR}='Показатель';
 $lang{COUNTER_HISTORY}='История показателей счетчика газа';
+$lang{PAYMENT_HISTORY}='История оплат';
+$lang{DATE_PAY}='Дата оплаты';
+$lang{VALUE_GRN}='Сумма, грн';
 1

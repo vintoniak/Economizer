@@ -27,5 +27,7 @@ $lang{COUNTER_NUMBER}='The number of counter';
 $lang{DATE_ADD_INDICATOR}='The date of adding indecator';
 $lang{INDICATOR}='The indicator';
 $lang{COUNTER_HISTORY}='The indicators of counters history';
-
+$lang{PAYMENT_HISTORY}='Payment history';
+$lang{DATE_PAY}='Payment day';
+$lang{VALUE_GRN}='Value,grn';
 1

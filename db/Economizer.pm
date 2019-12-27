@@ -336,13 +336,11 @@ sub info_user_info {
 }
 
 #**********************************************************
-=head2 add_user_info() - adding counters data for date
-
+=head2 add_user_metric104() - adding counters data for date
 
   Arguments:
 
   Returns:
-
 
   Examples:
     $Economizer->add_user_info({%FORM});
@@ -352,14 +350,34 @@ sub info_user_info {
 sub add_user_metric104 {
   my $self = shift;
   my ($attr) = @_;
+
   $self->query_add('economizer_metric104', {%$attr});
+
   return $self;
 }
 
 #**********************************************************
 
+=head2 add_user_payment104() - adding counters data for date
 
+  Arguments:
 
+  Returns:
+
+  Examples:
+    $Economizer->add_user_info({%FORM});
+
+=cut
+#**********************************************************
+sub add_user_payment104 {
+  my $self = shift;
+  my ($attr) = @_;
+
+  $self->query_add('economizer_payment104', {%$attr});
+
+  return $self;
+
+}
 
 #**********************************************************
 =head2 clear_metric104
@@ -376,10 +394,66 @@ sub add_user_metric104 {
 #**********************************************************
 sub clear_metric104 {
   my $self = shift;
-  $self->query_del('economizer_metric104', {},
-  {CLEAR_TABLE => 1} );
+
+$self->query_del("economizer_metric104", {}, {}, {CLEAR_TABLE => 1});
+$self->query_del("economizer_payment104", {}, {}, {CLEAR_TABLE => 1});
+
   return $self;
 }
 
 #**********************************************************
+
+
+=head2 take_indicators 104($attr)
+  Arguments:
+    $attr - hash_ref
+  Returns:
+=cut
+
+
+
+#**********************************************************
+sub take_indicators104 {
+  my $self = shift;
+  my ($attr) = @_;
+
+  $self->query2(
+    "SELECT * FROM economizer_metric104; ",
+    undef,
+    $attr
+  );
+
+  return $self->{list};
+
+
+}
+
+
+#**********************************************************
+
+
+=head2 take_payment($attr)
+  Arguments:
+    $attr - hash_ref
+  Returns:
+=cut
+
+
+
+#**********************************************************
+sub take_payment104{
+  my $self = shift;
+  my ($attr) = @_;
+
+ # Abills::Base::_bp('tetrs', 'ID');
+  $self->query2(
+    "SELECT * FROM economizer_payment104; ",
+    undef,
+    $attr
+  );
+
+  return $self->{list};
+
+}
+
 1;
