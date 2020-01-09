@@ -8,4 +8,5 @@
                        "02:1:$lang{ECONOMIZER}:e_user:"         => 0,
                        "03:1:$lang{STATISTICS}:e_statistics:"  => 0,
                        "04:1:$lang{DATA_FROM104}:site104:"         => 0,
+                       "05:1:$lang{DATA_FROM_ELECTRIC}:site_electric:"         => 0,
                        );
