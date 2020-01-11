@@ -651,12 +651,15 @@ my $applic_cookie_reg = $response_body =~ m/.AspNet.ApplicationCookie=(.*?)HttpO
 my $applic_cookie = $1;
   #print "aaaaaaaaaa ". $applic_cookie;
  
+
+
+
 #my @body;
 my $curl_cust = WWW::Curl::Easy->new;
-#$curl_cust->setopt(CURLOPT_HEADER,1);
+
 $curl_cust->setopt(CURLOPT_URL, 'https://my.oe.if.ua/consumers');
 $curl_cust->setopt(CURLOPT_COOKIE, $first_cookie.';'. ".AspNet.ApplicationCookie=$applic_cookie");
-#print "cookies: " . $first_cookie.';'. ".AspNet.ApplicationCookie=$applic_cookie".":endofcookies<br>\n";
+
 
 
 my $response_body_cust;
@@ -665,18 +668,7 @@ $curl_cust->setopt(CURLOPT_WRITEDATA,\$response_body_cust);
 # Starts the actual request
 
 my $retcode_cust = $curl_cust->perform;
-#print  "response: " . Dumper($response_body_cust);
 
-
-
-#$request11 = HTTP::Request->new(GET => 'https://my.oe.if.ua/consumers'); 
-#my $html = $ua_cust -> request($request11);
-#Abills::Base::_bp('', $html,{HEADER=>1});
-
-
-
-#my $body=join("",@body); 
-#print "body =  end body";
 
 my $i = 0;
   my @array_number_insite =();
@@ -720,10 +712,6 @@ for($j = 0;$j<$i; $j++){
 $table->addrow(@array);
 print $table->show();
 
-
- 
-
-
 my $datestring = strftime "%F", localtime;
 print ("date and time - $datestring\n");
 $datestring =~ m/(.*?)-(.*?)-/;
@@ -732,7 +720,10 @@ my $timepart = '{"PeriodFrom":201601,"PeriodTo":'."$nowtime".',"ViewMode":0}';
 if ($FORM{clickbutton}) {
 my $cons_id = $FORM{id};
 my $userid = $array_number_insite[$cons_id];
-print 'userid= '.$userid;
+
+
+
+
 my $curl_cons = WWW::Curl::Easy->new;
 print  ("https://my.oe.if.ua/consumers/$array_number_insite[$FORM{id}]/info");
 $curl_cons->setopt(CURLOPT_URL, "https://my.oe.if.ua/consumers/$userid/balance");
@@ -748,14 +739,10 @@ $Economizer->add_user_money_electric (
         SALDO   => $3.'.'.$4,
         ACCRUED    => $21.'.'.$22,
         PAID    => $25.'.'.$26,
-        REMAINDER    => $27.'.'.$28,
-        
+        REMAINDER    => $27.'.'.$28,    
       }
     );
-
   }
-
-
 
 # Take data from db
 
@@ -791,11 +778,6 @@ my $table_money = $html->table(
 }
 
 
-#<tr >\s+<td class="text-center">\s+<strong>\s+(01)\.(2020)\s+<\/strong>\s+<\/td>\s+<td class="text-right"> (117)\.(60)<\/td>\s+<td>\s+<p>Всього: <span class="pull-right"> (0)\.(00)<\/span>\s+<\/p>\s+<p class="pull-right">\s+<a class="detailLink" href="\/consumers\/(93022)\/balance\/detail\?balanceType=Energy&amp;period=(202001)">\s+<strong class="text-danger">Докладніше<\/strong>\s+<i class="fa fa-arrow-down"><\/i>\s+<\/a>\s+<\/p>\s+<\/td>\s+<td class="text-right">\s+(0)\.(00)\s+<\/td>\s+<td class="text-right">\s+(117)\.(60)\s+<\/td>\s+<\/tr>
-
-#(<tr >\s+<td class="text-center">\s+<strong>\s+(.*?)\.)(.*?)(\s+)<\/strong>\s+<\/td>\s+<td class="text-right"> (.*?)\.(.*?)<\/td>\s+<td>\s+<p>Всього: <span class="pull-right"> (.*?)\.(.*?)<\/span>\s+<\/p>\s+<p class="pull-right">\s+<a class="detailLink" href="\/consumers\/(.*?)\/balance\/detail\?balanceType=Energy&amp;period=(.*?)">\s+<strong class="text-danger">Докладніше<\/strong>\s+<i class="fa fa-arrow-down"><\/i>\s+<\/a>\s+<\/p>\s+<\/td>\s+<td class="text-right">\s+(.*?)\.(.*?)\s+<\/td>\s+<td class="text-right">\s+(.*?)\.(.*?)\s+<\/td>\s+<\/tr>
-
-#(<tr >\s+<td class="text-center">\s+<strong>\s+(.*?)\.)(.*?)(\s+)(<\/strong>\s+<\/td>\s+<td class="text-right"> )(.*?)(\.)(.*?)(<\/td>\s+<td>\s+<p>Всього: <span class="pull-right"> )(.*?)(\.)(.*?)(<\/span>\s+<\/p>\s+<p class="pull-right">\s+<a class="detailLink" href="\/consumers\/)(.*?)(\/balance\/detail\?balanceType=Energy&amp;period=)(.*?)(">\s+<strong class="text-danger">Докладніше<\/strong>\s+<i class="fa fa-arrow-down"><\/i>\s+<\/a>\s+<\/p>\s+<\/td>\s+<td class="text-right">\s+)(.*?)(\.)(.*?)(\s+<\/td>\s+<td class="text-right">\s+)(.*?)(\.)(.*?)(\s+)(<\/td>\s+<\/tr>)
 
 
 
@@ -804,125 +786,83 @@ my $table_money = $html->table(
 
 
 
-#my $cookie1 = $response->{'_headers'}{'set-cookie'}[0]; 
+
+
+
+print 'userid= '.$userid;
+my $curl_counter = WWW::Curl::Easy->new;
+$curl_counter->setopt(CURLOPT_URL, "https://my.oe.if.ua/consumers/$array_number_insite[$FORM{id}]/indexes");
+print 'site    '."https://my.oe.if.ua/consumers/$array_number_insite[$FORM{id}]/indexes";
+$curl_counter->setopt(CURLOPT_COOKIE, $first_cookie.';'. ".AspNet.ApplicationCookie=$applic_cookie".';ESOPeriods_2= %7B%22PeriodFrom%22%3A201601%2C%22PeriodTo%22%3A'.'201912'.'%2C%22ViewMode%22%3A0%7D%0A');
+#$nowtime
+$curl_counter->setopt(CURLOPT_WRITEDATA,\$response_body_counter);
+my $retcode_counter = $curl_counter->perform;
+
+print "response counter $response_body_counter";
+
+
+
+while ($response_body_counter =~ m/<tr >\s+<td rowspan="1">(.*?)<\/td>\s+<td rowspan="1" class="text-center">(.*?)<\/td>\s+<td class="text-center">без зони<\/td>\s+<td class="text-right">(.*?)<\/td>\s+<td rowspan="1">(.*?)<\/td>/g){
+print "result sd $1,$2,$3";
+
+
+$Economizer->add_user_electro_counter (
+      {
+        DATE    => $1,
+        COUNTER   => $2,
+        COUNTER_NUMBER    => $3,
+           
+      }
+    );
 
 
 
 
-   #use HTTP::Session;
-  #use HTTP::Session::State::Cookie;
- # my $string1 = $response->{'_headers'}{'set-cookie'}[0]; 
- # my $string2 = $response->{'_headers'}{'set-cookie'}[1]; 
- # my $string3 = $response->{'_headers'}{'set-cookie'}[2]; 
- # my $string4 = $response->{'_headers'}{'set-cookie'}[3]; 
- # my $string = $string1 .'; '. $string2.'; ' . $string3 .'; ' . $string4 ;
-  #my $req_token = $response->{'_headers'}{'--requestverificationtoken'};
- 
-
-#Abills::Base::_bp('', $response,{HEADER=>1});
-#print ("Received  dssfdsfsdfsdf: ". Dumper ($1));
- 
-# my $data2 = {'Email' => 'vintoniak7@gmail.com', 'Password' => 'Oollvv05111'} ;
-
-   # 'Email' => 'vintoniak7@gmail.com',
-   # 'Password' => 'Oollvv05111',
-  #  '__RequestVerificationToken' => 'ZRqSFBzO3EmMGZmc9GcA8RvAn2c2F3caw1zqgaithlz3mKPl-sy0SGRIBe5R_xKcgIXvhkO9AhCjNzMWHDM4JS6qSICgfFIkX8VFQ7ho_O81',
-  #  'RememberMe' =>'true'
-   # 'Cookie' => '_ga=GA1.3.1152919988.1576572832; ESOPeriods_2=%7B%22PeriodFrom%22%3A201901%2C%22PeriodTo%22%3A201912%2C%22ViewMode%22%3A0%7D; balance_balanceType=1; ASP.NET_SessionId=kcmavv2q2njc4ert4rmiwz1y; __RequestVerificationToken=_hjtBo5xuOQyCIceZKx25-ebKfN90PyUcNXn7CoNlTBgOOnj08-9jSg4ChI6TGGT4jtfk9S2AyV2iCLTKfxTNR6ctCOeYhk_MJ6g5Nrz1yE1; ARRAffinity=2fc96bbb2c25fb57dfd175e4133e58959ddf274b9b95f03cd6eaca578c525077; _gid=GA1.3.121420328.1578472507; _gat=1',
-#'Content-type' => 'application/x-www-form-urlencoded'
-    #'RememberMe' =>'false'
- # };
-
- # my $lwpcurl = LWP::Curl->new();
- # my $url1 = "https://my.oe.if.ua/Account/Login";
- # my $content = $lwpcurl->post($url1, $data2, $url);
-
- # print("Received response: $content\n");
-#
-
-# my $req1 = HTTP::Request::Common::POST($url1,$headers, %data1); 
-#$curlf->formaddfile($filename, 'attachment', "multipart/form-data");
-#$curl->setopt(CURLOPT_USERPWD, 'vintoniak7@gmail.com'.":".'Oollvv05111')
-#print("Received response: $response2\n");
-# Looking at the results...
-
-# print("Transfer went ok\n");
-# print("Received response: $response_body\n");
- #my %data = (
-  #  Email => 'vintoniak7@gmail.com',
-  #  Password => 'Oollvv05111',
-  #  RememberMe =>'false',
-  #  __RequestVerificationToken => '6gGlM8oxjahKtLweIqN9pptp5RC99eR-QZi3a2vcOuiKX9Wc59Y8aMFepRMX_8lmMw_-IW701ulu0o3Jo6d4CvEJppAjXumGmKgyfupJ71c1'
- # );
-
- # my $url_api   = "https://my.oe.if.ua/consumers";
-
-  #my $req_api = "";
-
- #my $page_calc = 1;
+  }
 
 
-#web_request($url_api,
-#    {
-#      CURL    => 1,
-#      HEADERS => ['Cookie: _ga=GA1.3.1152919988.1576572832; ESOPeriods_2=%7B%22PeriodFrom%22%3A201901%2C%22PeriodTo%22%3A201912%2C%22ViewMode%22%3A0%7D; balance_balanceType=1; ASP.NET_SessionId=b352ebysojvbg25tvz2tb5ae; __RequestVerificationToken=3VkM2sIftXPvqzreOXxzB4FyI58ymJd9aPrWNv5gQcWWlgNCNbZJlSWv8AZvncwtdkBjYVU7L5D-E7oANSywYWDqqF5HhSpQzL32nCRGkvU1; ARRAffinity=2fc96bbb2c25fb57dfd175e4133e58959ddf274b9b95f03cd6eaca578c525077; _gid=GA1.3.1542757874.1578045417; .AspNet.ApplicationCookie=WlC4PiB897vrYg3fK8yF2QjJKdvz496-DemtpkTlUDSyI3VYu4CQZWNB-TksACoFzXxaVgyyfqFstL1omkos_ScoTr_vlMiX12HeyRvnhdsIuF8u83iyDVy41hE7ybe2jQTvAtX-gE2EUzN0v5gALPBeiuVkly5br9-N9MEm8spf2-He1SYmuD8bw8B8czVACouWqmuWWbQbq3E3uBcP7LnfZdfMNIyEZrQ_M79UnoVxECRga5NVTRDL7814wTopC8XLicaKLRy8QD32ISW1mD61qj2cAFRzN36LAhvEmPFe2CtcLjWql1y5XJaJIfSJT-yo6zMUJEJC5dRSky87isqYJajtg6i7Zm2_oR4WepaOssZESHJpbko_TypZ_fi06LIDKSpLFnWXDIhl8sPNiWUYSgM9Bu9lmbw3F_YnJY2Rml4s7wuNmZifdFS3VS6GRJ1rfTNMItIlDqyLNEbcf5o8J-FRUTdADlR8im3WTJ2SmV_RUiQnFdlPnp-RL5ZU; _gat=1 ']
-#    }, %data
-#  );
+# Take data from db
 
- #Abills::Base::_bp('', $req_api,{HEADER=>1});
+my $table_counter = $html->table(
+      {
+        width   => '100%',
+        caption => 'Finance',
+        border  => 2,
+        title   => [  'ID', 'DATE','','COUNTER','COUNTER_NUMBER', '-', '-' ],
+        cols_align      => [ 'center', 'center','center','center' ],
+        ID              => 'COMPANY_ID',
+      }
+);
 
-#'X-Redmine-API-Key: ' . ($conf{TIMETRACKER_REDMINE_APIKEY})
- 
+ my $list_counter = $Economizer->take_electro_counter();
+  # print "Content-Type: text/html\n\n";
 
-#my $time_entries_hash = XML::Simple::XMLin($req_api, ForceArray => 1, KeyAttr => 1);
-  
+  # Add data to the table
+  foreach my $line (@$list_counter) {
 
-#print "req1: $req1 :req1\n";
-#print "web_request_cookies: $web_request_cookies: web_request_cookies\n\n";
-#print $string;
+    my @fields_array = ();
+    push @fields_array, $line->["0"];
+    push @fields_array, $line->["1"];
+    push @fields_array, $line->["2"];
+    push @fields_array, $line->["3"];
+    
+    push @fields_array, $table_counter->addrow(@fields_array);
+   }
 
- # my %data1 = (
-  #  Email => 'vintoniak7@gmail.com',
-  #  Password => 'Oollvv05111',
-  #  __RequestVerificationToken => 'ZRqSFBzO3EmMGZmc9GcA8RvAn2c2F3caw1zqgaithlz3mKPl-sy0SGRIBe5R_xKcgIXvhkO9AhCjNzMWHDM4JS6qSICgfFIkX8VFQ7ho_O81',
-   # RememberMe =>'true',
-   # RememberMe =>'false'
- # );
-
-
-
-# my $response1 = $ua->request($req1);
-# my $req = HTTP::Request::Common::POST($url1, %data1); 
-
-
-
-#my $response1 = web_request($url1,
-   # {
-     # CURL    => 1,
-    #  HEADERS => ['Cookie: _ga=GA1.3.1152919988.1576572832; ESOPeriods_2=%7B%22PeriodFrom%22%3A201901%2C%22PeriodTo%22%3A201912%2C%22ViewMode%22%3A0%7D; balance_balanceType=1; ASP.NET_SessionId=kcmavv2q2njc4ert4rmiwz1y; __RequestVerificationToken=_hjtBo5xuOQyCIceZKx25-ebKfN90PyUcNXn7CoNlTBgOOnj08-9jSg4ChI6TGGT4jtfk9S2AyV2iCLTKfxTNR6ctCOeYhk_MJ6g5Nrz1yE1; ARRAffinity=2fc96bbb2c25fb57dfd175e4133e58959ddf274b9b95f03cd6eaca578c525077; _gid=GA1.3.121420328.1578472507; _gat=1 ']
-  #  }, %data1
-  #);
-
-
-
-# my $req1 = HTTP::Request->new('POST', $url1, [$string], %data1);
-# 
+   print $table_counter ->show();
 
 
 
 
- # my $req1 = web_request($url1, 
-   # {POST => 'Email=vintoniak7@gmail.com&Password=Oollvv05111&RememberMe=false',
-   #  HEADERS => ["Cookie: $string"]});
 
 
-#my $req1 = HTTP::Request::Common::POST($url1, ['Cookie => '.$string], %data1);
-#my $response1 = $ua->request($req1)
 
-#  my $header   = [
-#    'Cookie'       =>  '',
 
-#   'Content-type' => 'application/x-www-form-urlencoded' ];
+
+
+
+
+
 
 
 }
