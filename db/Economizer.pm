@@ -456,4 +456,52 @@ sub take_payment104{
 
 }
 
+
+#**********************************************************
+=head2 add_user_money_electric() - adding counters data for date
+
+  Arguments:
+
+  Returns:
+
+  Examples:
+    $Economizer->add_user_info({%FORM});
+
+=cut
+#**********************************************************
+sub add_user_money_electric {
+  my $self = shift;
+  my ($attr) = @_;
+
+  $self->query_add('economizer_electro_money', {%$attr});
+
+  return $self;
+}
+
+#**********************************************************
+
+
+=head2 take_money_electric($attr)
+  Arguments:
+    $attr - hash_ref
+  Returns:
+=cut
+
+
+
+#**********************************************************
+sub take_money_electric() {
+my $self = shift;
+  my ($attr) = @_;
+
+ # Abills::Base::_bp('tetrs', 'ID');
+  $self->query2(
+    "SELECT * FROM economizer_electro_money; ",
+    undef,
+    $attr
+  );
+
+  return $self->{list};
+
+}
 1;

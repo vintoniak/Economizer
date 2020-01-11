@@ -600,12 +600,12 @@ sub site_electric{
   use Abills::Fetcher qw/web_request/;
   use Data::Dumper;
   use WWW::Curl::Form;
-  print "Content-type: text/html\n\n";
-
   use LWP::Curl;
   use WWW::Curl;
   use WWW::Curl::Easy;
+  use POSIX qw(strftime);
  
+  print "Content-type: text/html\n\n";
 
  # Clear the db
   $Economizer->clear_electric();
@@ -625,8 +625,8 @@ sub site_electric{
 
 
   #print "sdfdsfsdf: $req_token";
-  my $email = 'vintoniak7@gmail.com';
-  my $password = 'Oollvv05111';
+my $email = 'vintoniak7@gmail.com';
+my $password = 'Oollvv05111';
 my $curl = WWW::Curl::Easy->new;
 my $curlf = WWW::Curl::Form->new;
 $curlf->formadd("Email", "vintoniak7\@gmail.com");
@@ -647,21 +647,16 @@ $curl->setopt(CURLOPT_WRITEDATA,\$response_body);
 # Starts the actual request
 my $retcode = $curl->perform;
 
-  my $applic_cookie_reg = $response_body =~ m/.AspNet.ApplicationCookie=(.*?)HttpOnly/;
-  my $applic_cookie = $1;
+my $applic_cookie_reg = $response_body =~ m/.AspNet.ApplicationCookie=(.*?)HttpOnly/;
+my $applic_cookie = $1;
   #print "aaaaaaaaaa ". $applic_cookie;
  
-  
-
 #my @body;
 my $curl_cust = WWW::Curl::Easy->new;
 #$curl_cust->setopt(CURLOPT_HEADER,1);
 $curl_cust->setopt(CURLOPT_URL, 'https://my.oe.if.ua/consumers');
 $curl_cust->setopt(CURLOPT_COOKIE, $first_cookie.';'. ".AspNet.ApplicationCookie=$applic_cookie");
 #print "cookies: " . $first_cookie.';'. ".AspNet.ApplicationCookie=$applic_cookie".":endofcookies<br>\n";
-
-
-
 
 
 my $response_body_cust;
@@ -674,21 +669,9 @@ my $retcode_cust = $curl_cust->perform;
 
 
 
-
-
-
-
-
-
-
-
 #$request11 = HTTP::Request->new(GET => 'https://my.oe.if.ua/consumers'); 
 #my $html = $ua_cust -> request($request11);
 #Abills::Base::_bp('', $html,{HEADER=>1});
-
-
-
-
 
 
 
@@ -705,7 +688,6 @@ my $i = 0;
  # print "value = $2 ";
 #$2 dfdf $4 dsfdsf $6
   while ($response_body_cust =~ m/(<a href="#" onclick='removeConsumer\(")(.*?)(", ")(.*?)(, )(.*?)("\);'>)/g) {
-
     push(@array_number_insite, $2);
     push(@array_number_calc, $4);
     push(@array_user, $6);
@@ -736,34 +718,84 @@ for($j = 0;$j<$i; $j++){
 
 };
 $table->addrow(@array);
+print $table->show();
 
 
- print $table->show();
-
- if ($FORM{clickbutton}) {
- my $cons_id = $FORM{id};
- # print 'schos '.($FORM{id}).'end';
+ 
 
 
- my $userid = $array_number_insite[$cons_id];
- print 'userid= '.$userid;
+my $datestring = strftime "%F", localtime;
+print ("date and time - $datestring\n");
+$datestring =~ m/(.*?)-(.*?)-/;
+my $nowtime = $1.$2;
+my $timepart = '{"PeriodFrom":201601,"PeriodTo":'."$nowtime".',"ViewMode":0}';
+if ($FORM{clickbutton}) {
+my $cons_id = $FORM{id};
+my $userid = $array_number_insite[$cons_id];
+print 'userid= '.$userid;
 my $curl_cons = WWW::Curl::Easy->new;
 print  ("https://my.oe.if.ua/consumers/$array_number_insite[$FORM{id}]/info");
 $curl_cons->setopt(CURLOPT_URL, "https://my.oe.if.ua/consumers/$userid/balance");
-$curl_cons->setopt(CURLOPT_COOKIE, $first_cookie.';'. ".AspNet.ApplicationCookie=$applic_cookie");
+$curl_cons->setopt(CURLOPT_COOKIE, $first_cookie.';'. ".AspNet.ApplicationCookie=$applic_cookie".';ESOPeriods_2= %7B%22PeriodFrom%22%3A201601%2C%22PeriodTo%22%3A'.$nowtime.'%2C%22ViewMode%22%3A0%7D%0A');
+$curl_cons->setopt(CURLOPT_WRITEDATA,\$response_body_cons);
 my $retcode_cons = $curl_cons->perform;
+while ($response_body_cons =~ m/<tr >\s+<td class="text-center">\s+ <strong>\s+(.*?)\.(.*?)\s+<\/strong>\s+<\/td>\s+<td class="text-right"> (.*?)\.(.*?)<\/td>\s+<td>\s+<p>((.*?)<span class="pull-right"> (.*?)\.(.*?)<\/span>  <\/p>\s+)?(<p>(.*?)<span class="pull-right"> (.*?)\.(.*?)<\/span>  <\/p>\s+)?((<p>)(.*?)(<span class="pull-right">) (.*?)\.(.*?)<\/span>  <\/p>\s+)?(<p>(.*?)<span class="pull-right">(.*?)\.(.*?)<\/span>  <\/p>\s+)<p class="pull-right">\s+<a class="detailLink" (.*?)(\s+<strong class="text-danger">Докладніше<\/strong>\s+<i class="fa fa-arrow-down"><\/i>\s+<\/a>\s+<\/p>\s+<\/td>\s+<td class="text-right">\s+)(.*?)\.(.*?)\s+<\/td>\s+<td class="text-right">\s+(.*?)\.(.*?)\s+<\/td>\s+<\/tr>/g){
+print "result $1,$2,$3,$4,$7,$8,$11,$12,$17,$18,$21,$22,$25,$26,$27,$28";
+
+$Economizer->add_user_money_electric (
+      {
+        DATE    => $1.'.'.$2,
+        SALDO   => $3.'.'.$4,
+        ACCRUED    => $21.'.'.$22,
+        PAID    => $25.'.'.$26,
+        REMAINDER    => $27.'.'.$28,
+        
+      }
+    );
+
+  }
+
+
+
+# Take data from db
+
+my $table_money = $html->table(
+      {
+        width   => '100%',
+        caption => 'Finance',
+        border  => 2,
+        title   => [  'ID', 'DATE','SALDO','ACCRUED','PAID', 'REMAINDER', '-', '-' ],
+        cols_align      => [ 'center', 'center','center','center','center','center' ],
+        ID              => 'COMPANY_ID',
+      }
+);
+   my $list_money = $Economizer->take_money_electric();
+  # print "Content-Type: text/html\n\n";
+
+  # Add data to the table
+  foreach my $line (@$list_money) {
+
+    my @fields_array = ();
+    push @fields_array, $line->["0"];
+    push @fields_array, $line->["1"];
+    push @fields_array, $line->["2"];
+    push @fields_array, $line->["3"];
+    push @fields_array, $line->["4"];
+    push @fields_array, $line->["5"];
+    push @fields_array, $table_money->addrow(@fields_array);
+   }
+
+   print $table_money ->show();
+
 
 }
 
 
+#<tr >\s+<td class="text-center">\s+<strong>\s+(01)\.(2020)\s+<\/strong>\s+<\/td>\s+<td class="text-right"> (117)\.(60)<\/td>\s+<td>\s+<p>Всього: <span class="pull-right"> (0)\.(00)<\/span>\s+<\/p>\s+<p class="pull-right">\s+<a class="detailLink" href="\/consumers\/(93022)\/balance\/detail\?balanceType=Energy&amp;period=(202001)">\s+<strong class="text-danger">Докладніше<\/strong>\s+<i class="fa fa-arrow-down"><\/i>\s+<\/a>\s+<\/p>\s+<\/td>\s+<td class="text-right">\s+(0)\.(00)\s+<\/td>\s+<td class="text-right">\s+(117)\.(60)\s+<\/td>\s+<\/tr>
 
+#(<tr >\s+<td class="text-center">\s+<strong>\s+(.*?)\.)(.*?)(\s+)<\/strong>\s+<\/td>\s+<td class="text-right"> (.*?)\.(.*?)<\/td>\s+<td>\s+<p>Всього: <span class="pull-right"> (.*?)\.(.*?)<\/span>\s+<\/p>\s+<p class="pull-right">\s+<a class="detailLink" href="\/consumers\/(.*?)\/balance\/detail\?balanceType=Energy&amp;period=(.*?)">\s+<strong class="text-danger">Докладніше<\/strong>\s+<i class="fa fa-arrow-down"><\/i>\s+<\/a>\s+<\/p>\s+<\/td>\s+<td class="text-right">\s+(.*?)\.(.*?)\s+<\/td>\s+<td class="text-right">\s+(.*?)\.(.*?)\s+<\/td>\s+<\/tr>
 
-
-
-
-
-
-
+#(<tr >\s+<td class="text-center">\s+<strong>\s+(.*?)\.)(.*?)(\s+)(<\/strong>\s+<\/td>\s+<td class="text-right"> )(.*?)(\.)(.*?)(<\/td>\s+<td>\s+<p>Всього: <span class="pull-right"> )(.*?)(\.)(.*?)(<\/span>\s+<\/p>\s+<p class="pull-right">\s+<a class="detailLink" href="\/consumers\/)(.*?)(\/balance\/detail\?balanceType=Energy&amp;period=)(.*?)(">\s+<strong class="text-danger">Докладніше<\/strong>\s+<i class="fa fa-arrow-down"><\/i>\s+<\/a>\s+<\/p>\s+<\/td>\s+<td class="text-right">\s+)(.*?)(\.)(.*?)(\s+<\/td>\s+<td class="text-right">\s+)(.*?)(\.)(.*?)(\s+)(<\/td>\s+<\/tr>)
 
 
 
