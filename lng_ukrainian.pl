@@ -25,9 +25,15 @@ $lang{DATA_FROM104}='Дані із сайту 104.ua';
 $lang{COUNTER_NUMBER}='Номер лічильника';
 $lang{DATE_ADD_INDICATOR}='Дата';
 $lang{INDICATOR}='Показник';
-$lang{COUNTER_HISTORY}='Історія показників лічильника газу';
+$lang{COUNTER_HISTORY}='Історія показників лічильника ';
 $lang{AMOUNT_MONEY_SPENT}='Сума витрачених грошей';
 $lang{PAYMENT_HISTORY}='Історія оплат';
 $lang{DATE_PAY}='Дата оплати';
 $lang{VALUE_GRN}='Сума, грн';
+$lang{COUNTER}='Лічильник';
+$lang{SALDO}='Сальдо';
+$lang{ACCRUED}='Нараховано';
+$lang{PAID}='Оплачено';
+$lang{REMAINDER}='Залишок';
+$lang{Consomers}='Споживачі';
 1

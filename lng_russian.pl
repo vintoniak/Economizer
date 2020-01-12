@@ -22,15 +22,19 @@ $lang{NO_PUBLIC_UTILITIES_FOR_THIS_YEAR}='За этот год нету введ
 $lang{SPENT_MONEY_FOR_PUB_UTILITIES_FOR_PERIODS}='Потраченные деньги на комунальные услуги за периоды';
 $lang{DIFFERENCE_PUBLIC_UTILITIES_FOR_PERIODS}='Разница показателей счетчика за периоды';
 $lang{AMOUNT_MONEY_SPENT}='Сумма потраченных денег';
-
 $lang{DATA_FROM104}='Данные с сайта 104.ua';
 $lang{COUNTER_NUMBER}='Номер счетчика';
 $lang{DATE_ADD_INDICATOR}='Дата';
 $lang{INDICATOR}='Показатель';
-$lang{COUNTER_HISTORY}='История показателей счетчика газа';
+$lang{COUNTER_HISTORY}='История показателей счетчика';
 $lang{PAYMENT_HISTORY}='История оплат';
 $lang{DATE_PAY}='Дата оплаты';
+$lang{COUNTER}='Счетчик';
+$lang{SALDO}='Сальдо';
+$lang{ACCRUED}='Начисленно';
+$lang{PAID}='Оплачено';
+$lang{REMAINDER}='Остаток';
 $lang{VALUE_GRN}='Сумма, грн';
 $lang{DATA_FROM_ELECTRIC}='Данные с сайта ПрикарпатЕнергоТрейд';
-
+$lang{Consomers}='Потребители';
 1

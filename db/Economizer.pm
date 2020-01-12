@@ -412,7 +412,34 @@ $self->query_del("economizer_payment104", {}, {}, {CLEAR_TABLE => 1});
 
 
 
+
 #**********************************************************
+
+
+sub clear_electric {
+  my $self = shift;
+
+$self->query_del("economizer_electro_money", {}, {}, {CLEAR_TABLE => 1});
+$self->query_del("economizer_electro_counter", {}, {}, {CLEAR_TABLE => 1});
+
+  return $self;
+}
+
+#**********************************************************
+
+
+=head2 take_indicators 104($attr)
+  Arguments:
+    $attr - hash_ref
+  Returns:
+=cut
+
+
+
+
+#**********************************************************
+
+
 sub take_indicators104 {
   my $self = shift;
   my ($attr) = @_;
@@ -455,6 +482,8 @@ sub take_payment104{
   return $self->{list};
 
 }
+
+
 
 
 #**********************************************************
@@ -503,5 +532,62 @@ my $self = shift;
 
   return $self->{list};
 
+#**********************************************************
+
 }
+
+
+
+
+
+#**********************************************************
+=head2 add_user_money_electric() - adding counters data for date
+
+  Arguments:
+
+  Returns:
+
+  Examples:
+    $Economizer->add_user_info({%FORM});
+
+=cut
+#**********************************************************
+sub add_user_electro_counter {
+  my $self = shift;
+  my ($attr) = @_;
+
+  $self->query_add('economizer_electro_counter', {%$attr});
+
+  return $self;
+}
+
+#**********************************************************
+
+
+=head2 take_money_electric($attr)
+  Arguments:
+    $attr - hash_ref
+  Returns:
+=cut
+
+
+
+#**********************************************************
+sub take_electro_counter() {
+my $self = shift;
+  my ($attr) = @_;
+
+ # Abills::Base::_bp('tetrs', 'ID');
+  $self->query2(
+    "SELECT * FROM economizer_electro_counter; ",
+    undef,
+    $attr
+  );
+
+  return $self->{list};
+
+#**********************************************************
+
+}
+
 1;

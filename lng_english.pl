@@ -30,4 +30,15 @@ $lang{COUNTER_HISTORY}='The indicators of counters history';
 $lang{PAYMENT_HISTORY}='Payment history';
 $lang{DATE_PAY}='Payment day';
 $lang{VALUE_GRN}='Value,grn';
+$lang{COUNTER}='Counter';
+$lang{SALDO}='Saldo';
+$lang{ACCRUED}='Accrued';
+$lang{PAID}='Paid';
+$lang{REMAINDER}='Remainder';
+$lang{Consomers}='Consumers';
+
+
+
+
+
 1
