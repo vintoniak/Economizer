@@ -36,4 +36,6 @@ $lang{ACCRUED}='Нараховано';
 $lang{PAID}='Оплачено';
 $lang{REMAINDER}='Залишок';
 $lang{Consomers}='Споживачі';
+$lang{LOGIN}='Логін';
+$lang{PASSWORD}='Пароль';
 1

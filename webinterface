@@ -435,6 +435,9 @@ sub site104 {
   $Economizer->clear_metric104();
   my $ua = LWP::UserAgent->new();
 
+
+
+
   #Add header of table
   my $table = $html->table(
     {
@@ -447,6 +450,25 @@ sub site104 {
 
     }
   );
+
+
+#TAKE user_id FROM 
+my $user_id=4;
+print ("Content-Type: text/html \n\n");
+#take main data from db by this user_id
+my $list = $Economizer->take_main_data();
+my $login;
+my $password;
+foreach my $line (@$list) {
+my $value = $line->['5']; 
+if ($value == $user_id) {
+ $login = $line->['1'];
+ $password = $line->['2'];
+}
+# _username => 'procuk1944@gmail.com',
+#    _password => 'hEoP7SgG'
+ }
+
 
   # Connecting to the personal page of 104.ua
   my %data = (
@@ -463,6 +485,9 @@ sub site104 {
   ];
   my $url_api   = "https://104.ua/ua/cabinet/subscription_feemethod/getRecalculatedData";
   my $page_calc = 1;
+  Abills::Base::_bp('', 'response'.$response->{content},{HEADER=>1});
+  print("Content-Type: text/html \n\n");
+  print ($response->{'_headers'}{'set-cookie'}[0]) . 'CON';
 
   # Content analysis of the page with indicators history
   while ($ua->request(HTTP::Request->new('POST', $url_api, $header, "ppage=" . $page_calc . "&per_page=20&type=recalculateData&value=m&page_name=subscription_fee"))->{'_content'} =~ m/<td class=\\"first\\">(.+)<\\\/td>/g) {
@@ -613,6 +638,23 @@ sub site_electric {
   use WWW::Curl::Easy;
   use POSIX qw(strftime);
 
+  
+#TAKE user_id FROM 
+my $user_id=4;
+#take main data from db by this user_id
+my $list = $Economizer->take_main_data();
+my $login;
+my $password;
+foreach my $line (@$list) {
+my $value = $line->["5"]; 
+if ($value = $user_id) {
+$login = $line->["3"];
+ $password = $line->["4"];
+}
+
+ }
+
+print "Content-Type: text/html \n\n";
 
   # Clear the db
   $Economizer->clear_electric();
@@ -634,12 +676,13 @@ sub site_electric {
   my $first_cookie = $cookie1 . '; ' . $cookie2 . '; ' . $cookie3 . '; ' . $cookie4;
 
   # authentication by email, passwork and requestVerificationToken
-  my $email    = 'vintoniak7@gmail.com';
-  my $password = 'Oollvv05111';
+ # my $email    = $login;
+  #my $password = $password;
   my $curl     = WWW::Curl::Easy->new;
   my $curlf    = WWW::Curl::Form->new;
-  $curlf->formadd("Email",                      "vintoniak7\@gmail.com");
-  $curlf->formadd("Password",                   "Oollvv05111");
+  $curlf->formadd("Email",                      $login);
+  $curlf->formadd("Password",                   $password);
+  print $login.'right'.$password;
   $curlf->formadd("__RequestVerificationToken", $req_token);
   $curl->setopt(CURLOPT_HTTPPOST, $curlf);
   $curl->setopt(CURLOPT_HEADER,   1);
@@ -752,9 +795,7 @@ m/<tr >\s+<td class="text-center">\s+ <strong>\s+(.*?)\.(.*?)\s+<\/strong>\s+<\/
     );
     my $list_money = $Economizer->take_money_electric();
 
-    # print "Content-Type: text/html\n\n";
 
-    # Add data to the payment table of electric
     foreach my $line (@$list_money) {
 
       my @fields_array = ();
@@ -821,6 +862,90 @@ m/<tr >\s+<td class="text-center">\s+ <strong>\s+(.*?)\.(.*?)\s+<\/strong>\s+<\/
     print $table_counter ->show();
 
   }
+
+}
+
+
+#**********************************************************
+
+=head2 add_main() -
+
+  Arguments:
+    $attr -
+  Returns:
+
+
+  Examples:
+
+=cut
+
+#**********************************************************
+sub add_main{
+use Encode qw(decode encode);
+
+
+  my $Economizer       = Economizer ->new($db, $admin, \%conf);
+    my $user_id = '4';
+
+#check existing data current user 
+
+
+
+my $list = $Economizer->take_main();
+my $existing = 'no';
+
+    # Add data to the tabl
+
+foreach my $line (@$list) {
+my $value = $line->["5"]; 
+if ($value = $user_id) {
+$existing = 'yes';
+
+}
+
+ }
+
+
+   
+
+
+
+
+
+  if ($FORM{ADD}) {
+
+    $Economizer->add_main(
+      {
+        LOGIN104    => $FORM{LOGIN104},
+        PASSWORD104 => $FORM{PASSWORD104},
+        LOGIN_ELECTRO => $FORM{LOGIN_ELECTRO},
+        PASSWORD_ELECTRO   => $FORM{PASSWORD_ELECTRO},
+        USER_ID   => $user_id,  
+        EXISTING => $existing
+      }
+    );
+    $html->message('info', $lang{SUCCESS});
+  }
+
+
+  
+
+  $html->tpl_show(
+    _include('economizer_main', 'Economizer'),
+    {
+      ID          => $FORM{ID},
+      INDEX       => $index,
+      LOGIN104        => $html->form_input('LOGIN104', $FORM{LOGIN104},{OUTPUT2RETURN=>1}),
+      PASSWORD104   => ,$html->form_input('PASSWORD104', $FORM{PASSWORD104},{OUTPUT2RETURN=>1}),
+      LOGIN_ELECTRO      => $html->form_input('LOGIN_ELECTRO', $FORM{LOGIN_ELECTRO},{OUTPUT2RETURN=>1}),
+      PASSWORD_ELECTRO      => $html->form_input('PASSWORD_ELECTRO', $FORM{PASSWORD_ELECTRO},{OUTPUT2RETURN=>1}),
+      BUTTON_ADD  => $html->form_input("ADD", $lang{ADD}, { TYPE => "submit", OUTPUT2RETURN=>1}),
+
+    }
+  );
+
+#print Dumper($button_add);
+  return 1;
 
 }
 

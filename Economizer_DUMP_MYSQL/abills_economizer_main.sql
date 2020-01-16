@@ -16,28 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `economizer_payment104`
+-- Table structure for table `economizer_main`
 --
 
-DROP TABLE IF EXISTS `economizer_payment104`;
+DROP TABLE IF EXISTS `economizer_main`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `economizer_payment104` (
+CREATE TABLE `economizer_main` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `date` date DEFAULT NULL,
-  `payment` int(11) NOT NULL DEFAULT '0' COMMENT 'Taking indicators of counters from 104.ua',
+  `login104` varchar(45) DEFAULT ' ',
+  `password104` blob,
+  `login_electro` varchar(45) DEFAULT ' ',
+  `password_electro` blob,
+  `user_id` int(10) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `economizer_payment104`
+-- Dumping data for table `economizer_main`
 --
 
-LOCK TABLES `economizer_payment104` WRITE;
-/*!40000 ALTER TABLE `economizer_payment104` DISABLE KEYS */;
-INSERT INTO `economizer_payment104` VALUES (1,'2019-07-08',20),(2,'2019-03-01',100),(3,'2019-02-05',598),(4,'2019-01-03',260),(5,'2018-10-05',30),(6,'2018-09-10',35),(7,'2018-07-02',37),(8,'2018-05-04',505),(9,'2018-02-01',581),(10,'2017-06-21',180),(11,'2017-01-30',300),(12,'2015-09-24',29),(13,'2015-07-29',36);
-/*!40000 ALTER TABLE `economizer_payment104` ENABLE KEYS */;
+LOCK TABLES `economizer_main` WRITE;
+/*!40000 ALTER TABLE `economizer_main` DISABLE KEYS */;
+INSERT INTO `economizer_main` VALUES (1,'procuk1944@gmail.com',_binary '◊ìç∆ª]','vintoniak7@gmail.com',_binary 'eÛ#üg\0\'Qw8',4);
+/*!40000 ALTER TABLE `economizer_main` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

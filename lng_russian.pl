@@ -37,4 +37,10 @@ $lang{REMAINDER}='Остаток';
 $lang{VALUE_GRN}='Сумма, грн';
 $lang{DATA_FROM_ELECTRIC}='Данные с сайта ПрикарпатЕнергоТрейд';
 $lang{Consomers}='Потребители';
+$lang{SETTINGS_FORM}='Форма настройки';
+$lang{RESOURSE_104}='Данные для сайта 104.ua';
+$lang{RESOURSE_ELECTRO}='Данные для сайта https://oe.if.ua/';
+$lang{LOGIN}='Логин';
+$lang{PASSWORD}='Пароль';
+
 1
