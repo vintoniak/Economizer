@@ -37,7 +37,7 @@ sub e_user {
   #my ($attr) = @_;
   my %INFORMATION;
   $INFORMATION{BTN_NAME} = "$lang{ADD}";
-  $INFORMATION{ACTION}   = "add";
+  $INFORMATION{ACTION} = "add";
 
   if ($FORM{DATE} && $FORM{action} eq 'add') {
 
@@ -46,19 +46,19 @@ sub e_user {
 
     if ($prev_date ne '' && ($prev_date->{light} > $FORM{LIGHT} || $prev_date->{gas} > $FORM{GAS} || $prev_date->{water} > $FORM{WATER})) {
       $html->message("err", "$lang{NEW_DATA_FOR} $FORM{DATE} $lang{SMALLER_THEN} $prev_date->{date}!", "$lang{CHECK_CORRECTNESS}");
-      $INFORMATION{DATE}     = $FORM{DATE};
-      $INFORMATION{LIGHT}    = $FORM{LIGHT};
-      $INFORMATION{GAS}      = $FORM{GAS};
-      $INFORMATION{WATER}    = $FORM{WATER};
+      $INFORMATION{DATE} = $FORM{DATE};
+      $INFORMATION{LIGHT} = $FORM{LIGHT};
+      $INFORMATION{GAS} = $FORM{GAS};
+      $INFORMATION{WATER} = $FORM{WATER};
       $INFORMATION{COMMUNAL} = $FORM{COMMUNAL};
       $INFORMATION{COMMENTS} = $FORM{COMMENTS};
     }
     elsif ($next_date ne '' && ($next_date->{light} < $FORM{LIGHT} || $next_date->{gas} < $FORM{GAS} || $next_date->{water} < $FORM{WATER})) {
       $html->message("err", "$lang{NEW_DATA_FOR} $FORM{DATE} $lang{GREATER_THEN} $next_date->{date}!", "$lang{CHECK_CORRECTNESS}");
-      $INFORMATION{DATE}     = $FORM{DATE};
-      $INFORMATION{LIGHT}    = $FORM{LIGHT};
-      $INFORMATION{GAS}      = $FORM{GAS};
-      $INFORMATION{WATER}    = $FORM{WATER};
+      $INFORMATION{DATE} = $FORM{DATE};
+      $INFORMATION{LIGHT} = $FORM{LIGHT};
+      $INFORMATION{GAS} = $FORM{GAS};
+      $INFORMATION{WATER} = $FORM{WATER};
       $INFORMATION{COMMUNAL} = $FORM{COMMUNAL};
       $INFORMATION{COMMENTS} = $FORM{COMMENTS};
     }
@@ -78,19 +78,19 @@ sub e_user {
 
     if ($prev_date ne '' && ($prev_date->{light} > $FORM{LIGHT} || $prev_date->{gas} > $FORM{GAS} || $prev_date->{water} > $FORM{WATER})) {
       $html->message("err", "$lang{NEW_DATA_FOR} $FORM{DATE} $lang{SMALLER_THEN} $prev_date->{date}!", "$lang{CHECK_CORRECTNESS}");
-      $INFORMATION{DATE}     = $FORM{DATE};
-      $INFORMATION{LIGHT}    = $FORM{LIGHT};
-      $INFORMATION{GAS}      = $FORM{GAS};
-      $INFORMATION{WATER}    = $FORM{WATER};
+      $INFORMATION{DATE} = $FORM{DATE};
+      $INFORMATION{LIGHT} = $FORM{LIGHT};
+      $INFORMATION{GAS} = $FORM{GAS};
+      $INFORMATION{WATER} = $FORM{WATER};
       $INFORMATION{COMMUNAL} = $FORM{COMMUNAL};
       $INFORMATION{COMMENTS} = $FORM{COMMENTS};
     }
     elsif ($next_date ne '' && ($next_date->{light} < $FORM{LIGHT} || $next_date->{gas} < $FORM{GAS} || $next_date->{water} < $FORM{WATER})) {
       $html->message("err", "$lang{NEW_DATA_FOR} $FORM{DATE} $lang{GREATER_THEN} $next_date->{date}!", "$lang{CHECK_CORRECTNESS}");
-      $INFORMATION{DATE}     = $FORM{DATE};
-      $INFORMATION{LIGHT}    = $FORM{LIGHT};
-      $INFORMATION{GAS}      = $FORM{GAS};
-      $INFORMATION{WATER}    = $FORM{WATER};
+      $INFORMATION{DATE} = $FORM{DATE};
+      $INFORMATION{LIGHT} = $FORM{LIGHT};
+      $INFORMATION{GAS} = $FORM{GAS};
+      $INFORMATION{WATER} = $FORM{WATER};
       $INFORMATION{COMMUNAL} = $FORM{COMMUNAL};
       $INFORMATION{COMMENTS} = $FORM{COMMENTS};
     }
@@ -107,15 +107,15 @@ sub e_user {
 
   if ($FORM{chg}) {
     my $date_info = $Economizer->info_user_info({ COLS_NAME => 1, ID => $FORM{chg} });
-    $INFORMATION{DATE}     = $date_info->{date};
-    $INFORMATION{LIGHT}    = $date_info->{light};
-    $INFORMATION{GAS}      = $date_info->{gas};
-    $INFORMATION{WATER}    = $date_info->{water};
+    $INFORMATION{DATE} = $date_info->{date};
+    $INFORMATION{LIGHT} = $date_info->{light};
+    $INFORMATION{GAS} = $date_info->{gas};
+    $INFORMATION{WATER} = $date_info->{water};
     $INFORMATION{COMMUNAL} = $date_info->{communal};
     $INFORMATION{COMMENTS} = $date_info->{comments};
     $INFORMATION{BTN_NAME} = "$lang{CHANGE}";
-    $INFORMATION{ACTION}   = "change";
-    $INFORMATION{ID}       = "$FORM{chg}";
+    $INFORMATION{ACTION} = "change";
+    $INFORMATION{ID} = "$FORM{chg}";
   }
 
   if ($FORM{del}) {
@@ -166,7 +166,7 @@ sub e_user {
         'communal' => "$lang{COMMUNAL}" . ", $lang{GRN}",
         'comments' => "$lang{COMMENTS}"
       },
-      TABLE => {
+      TABLE           => {
         width   => '100%',
         caption => "$lang{ECONOMIZER}",
         qs      => $pages_qs,
@@ -175,10 +175,10 @@ sub e_user {
         EXPORT  => 1,
         MENU    => "$lang{ADD}:index=" . get_function_index('e_user') . ':add' . ";",
       },
-      MAKE_ROWS     => 1,
-      SEARCH_FORMER => 1,
-      MODULE        => 'Economizer',
-      TOTAL         => 1
+      MAKE_ROWS       => 1,
+      SEARCH_FORMER   => 1,
+      MODULE          => 'Economizer',
+      TOTAL           => 1
     }
   );
 
@@ -210,7 +210,7 @@ sub e_statistics {
   $INFORMATION{YEARS_SELECT} = $html->form_select(
     'YEAR',
     {
-      SELECTED => $FORM{YEAR} || $year,
+      SELECTED  => $FORM{YEAR} || $year,
       SEL_ARRAY => \@YEARS,
       SEL_KEY   => 'id',
       SEL_VALUE => 'name',
@@ -242,19 +242,19 @@ sub e_statistics {
   else {
     my @dates = ();
     my @light = ();
-    my @gas   = ();
+    my @gas = ();
     my @water = ();
     my @MONTHES;
     my @NORMAL_DATES_LIST = reverse(@$info_list);
 
-    for (my $i = 1 ; $i < scalar(@NORMAL_DATES_LIST) ; $i++) {
-      my ($first_year,  $first_month,  $first_day)  = split('-', $NORMAL_DATES_LIST[ $i - 1 ]->{date});
+    for (my $i = 1; $i < scalar(@NORMAL_DATES_LIST); $i++) {
+      my ($first_year, $first_month, $first_day) = split('-', $NORMAL_DATES_LIST[ $i - 1 ]->{date});
       my ($second_year, $second_month, $second_day) = split('-', $NORMAL_DATES_LIST[$i]->{date});
 
       #push (@dates, "$NORMAL_DATES_LIST[$i - 1]->{date} - $NORMAL_DATES_LIST[$i]->{date}");
       push(@dates, "$first_day $MONTHES[--$first_month]  - $second_day $MONTHES[--$second_month] ");
       push(@light, ($NORMAL_DATES_LIST[$i]->{light} - $NORMAL_DATES_LIST[ $i - 1 ]->{light}));
-      push(@gas,   ($NORMAL_DATES_LIST[$i]->{gas} - $NORMAL_DATES_LIST[ $i - 1 ]->{gas}));
+      push(@gas, ($NORMAL_DATES_LIST[$i]->{gas} - $NORMAL_DATES_LIST[ $i - 1 ]->{gas}));
       push(@water, ($NORMAL_DATES_LIST[$i]->{water} - $NORMAL_DATES_LIST[ $i - 1 ]->{water}));
     }
 
@@ -280,26 +280,26 @@ sub e_statistics {
           $lang{LIGHT} => 'rgb(255,205,86)',
           $lang{GAS}   => 'rgb(255,99,132)'
         },
-        FILL          => 'false',
-        TITLE         => "$lang{DIFFERENCE_PUBLIC_UTILITIES_FOR_PERIODS}",
-        OUTPUT2RETURN => 1,
+        FILL              => 'false',
+        TITLE             => "$lang{DIFFERENCE_PUBLIC_UTILITIES_FOR_PERIODS}",
+        OUTPUT2RETURN     => 1,
       }
     );
 
     my @money_for_light = ();
-    my @money_for_gas   = ();
+    my @money_for_gas = ();
     my @money_for_water = ();
 
     my $light_till_100 = 0.714;
     my $light_till_500 = 1.29;
-    my $gas_per_one    = 6.879;
-    my $water_per_one  = 14.64;
+    my $gas_per_one = 6.879;
+    my $water_per_one = 14.64;
 
     my $light_total = 0;
-    my $gas_total   = 0;
+    my $gas_total = 0;
     my $water_total = 0;
 
-    for (my $i = 0 ; $i < scalar(@dates) ; $i++) {
+    for (my $i = 0; $i < scalar(@dates); $i++) {
 
       if ($light[$i] < 100) {
         my $light_pay = $light[$i] * $light_till_100;
@@ -344,8 +344,8 @@ sub e_statistics {
           $lang{LIGHT} => 'rgb(255,205,86)',
           $lang{GAS}   => 'rgb(255,99,132)'
         },
-        TITLE         => "$lang{SPENT_MONEY_FOR_PUB_UTILITIES_FOR_PERIODS}",
-        OUTPUT2RETURN => 1,
+        TITLE             => "$lang{SPENT_MONEY_FOR_PUB_UTILITIES_FOR_PERIODS}",
+        OUTPUT2RETURN     => 1,
       }
     );
 
@@ -369,8 +369,8 @@ sub e_statistics {
         BACKGROUND_COLORS => {
           TOTAL => [ 'rgb(255,205,86)', 'rgb(255,99,132)', 'rgb(54, 162, 235)' ]
         },
-        TITLE         => "$lang{AMOUNT_MONEY_SPENT}",
-        OUTPUT2RETURN => 1,
+        TITLE             => "$lang{AMOUNT_MONEY_SPENT}",
+        OUTPUT2RETURN     => 1,
       }
     );
   }
@@ -402,7 +402,7 @@ sub e_tariffs {
   my ($attr) = @_;
 
   my %DATA;
-  $DATA{ACTION}   = 'add';
+  $DATA{ACTION} = 'add';
   $DATA{BTN_NAME} = "$lang{ADD}";
 
   if ($FORM{action} eq 'add') {
@@ -413,7 +413,7 @@ sub e_tariffs {
   }
 
   if ($FORM{chg}) {
-    $DATA{ACTION}   = 'change';
+    $DATA{ACTION} = 'change';
     $DATA{BTN_NAME} = "$lang{CHANGE}";
   }
 
@@ -421,7 +421,7 @@ sub e_tariffs {
 
   }
 
-  $html->tpl_show(_include('economizer_add_tariff', 'Economizer'), {%DATA});
+  $html->tpl_show(_include('economizer_add_tariff', 'Economizer'), { %DATA });
   return 1;
 }
 
@@ -445,14 +445,13 @@ sub site104 {
   my $Economizer = Economizer->new($db, $admin, \%conf);
 
   my $ua = LWP::UserAgent->new();
-
   #Add header of table
   my $table = $html->table(
     {
-      width   => '100%',
-      caption => $lang{COUNTER_HISTORY},
-      border  => 2,
-      title   => [ 'id', $lang{COUNTER_NUMBER}, $lang{DATE_ADD_INDICATOR}, $lang{INDICATOR}, '-', '-' ],
+      width      => '100%',
+      caption    => $lang{COUNTER_HISTORY},
+      border     => 2,
+      title      => [ 'id', $lang{COUNTER_NUMBER}, $lang{DATE_ADD_INDICATOR}, $lang{INDICATOR}, '-', '-' ],
       cols_align => [ 'center', 'center', 'center', 'center' ],
       ID         => 'COMPANY_ID',
 
@@ -461,14 +460,10 @@ sub site104 {
 
   #ATTENTION!! IT'S USER ID FOR TESTING, IT NEED TO BE TAKING FROM DB ( ABILLS_USER )
   my $user_id = 4;
-
   # Clear the user's data
-  $Economizer->clear_metric104(
-    {
-      USER_ID => $user_id
-    }
-  );
-
+  $Economizer->clear_metric104({
+    USER_ID => $user_id
+  });
   #take main data from db by this user_id
   my $list = $Economizer->take_main_data();
   my $login;
@@ -476,32 +471,30 @@ sub site104 {
   foreach my $line (@$list) {
     my $value = $line->['5'];
     if ($value == $user_id) {
-      $login    = $line->['1'];
+      $login = $line->['1'];
       $password = $line->['2'];
     }
   }
-
   # Connecting to the personal page of 104.ua
   my %data = (
     _username => $login,
     _password => $password
   );
   my $url = "https://104.ua/ua/cabinet#type=individual";
-  my $req = HTTP::Request::Common::POST($url, [%data]);
+  my $req = HTTP::Request::Common::POST($url, [ %data ]);
 
   my $response = $ua->request($req);
-  my $header   = [
+  my $header = [
     'Cookie'       => $response->{'_headers'}{'set-cookie'}[0],
     'Content-type' => 'application/x-www-form-urlencoded'
   ];
-  my $url_api   = "https://104.ua/ua/cabinet/subscription_feemethod/getRecalculatedData";
+  my $url_api = "https://104.ua/ua/cabinet/subscription_feemethod/getRecalculatedData";
   my $page_calc = 1;
-
   # Content analysis of the page with indicators history
   while ($ua->request(HTTP::Request->new('POST', $url_api, $header, "ppage=" . $page_calc . "&per_page=20&type=recalculateData&value=m&page_name=subscription_fee"))->{'_content'} =~ m/<td class=\\"first\\">(.+)<\\\/td>/g) {
 
-    my $data_api     = "ppage=" . $page_calc . "&per_page=20&type=recalculateData&value=m&page_name=subscription_fee";
-    my $req_api      = HTTP::Request->new('POST', $url_api, $header, $data_api);
+    my $data_api = "ppage=" . $page_calc . "&per_page=20&type=recalculateData&value=m&page_name=subscription_fee";
+    my $req_api = HTTP::Request->new('POST', $url_api, $header, $data_api);
     my $response_api = $ua->request($req_api);
 
     # Parse html table with the history of indicators
@@ -528,7 +521,6 @@ sub site104 {
 
   # Take data from db
   my $list = $Economizer->take_indicators104();
-
   # Add data to the table
   foreach my $line (@$list) {
 
@@ -540,47 +532,43 @@ sub site104 {
     push @fields_array, $table->addrow(@fields_array);
   }
   print $table->show();
-
   #Add header of table
   my $table_pay = $html->table(
     {
-      width   => '100%',
-      caption => $lang{PAYMENT_HISTORY},
-      border  => 2,
-      title   => [ 'id', $lang{DATE_PAY}, $lang{VALUE_GRN}, '-', '-' ],
+      width      => '100%',
+      caption    => $lang{PAYMENT_HISTORY},
+      border     => 2,
+      title      => [ 'id', $lang{DATE_PAY}, $lang{VALUE_GRN}, '-', '-' ],
       cols_align => [ 'center', 'center', 'center', ],
       ID         => 'COMPANY_ID',
 
     }
   );
-
   # Parse data of payment
-  my $url_api   = "https://104.ua/ua/cabinet/consumers-bookmethod/getPaymentsData";
+  my $url_api = "https://104.ua/ua/cabinet/consumers-bookmethod/getPaymentsData";
   my $page_calc = 1;
-
   # Content analysis of the page with payment history
   while ($ua->request(HTTP::Request->new('POST', $url_api, $header, "ppage=" . $page_calc . "&per_page=5&type=summaryData&page_name=subscription_fee"))->{'_content'} =~ m/(<td class=\\\"third\\\">)(.+?)( \\u0433\\u0440\\u043d<\\\/td>)/g) {
 
-    my $data_api     = "ppage=" . $page_calc . "&per_page=5&type=summaryData&page_name=subscription_fee";
-    my $req_api      = HTTP::Request->new('POST', $url_api, $header, $data_api);
+    my $data_api = "ppage=" . $page_calc . "&per_page=5&type=summaryData&page_name=subscription_fee";
+    my $req_api = HTTP::Request->new('POST', $url_api, $header, $data_api);
     my $response_api = $ua->request($req_api);
-    my $i            = 0;
-    my @array        = ();
-    my @array2       = ();
+    my $i = 0;
+    my @array = ();
+    my @array2 = ();
 
     # Parse data of payment
     while ($response_api->{'_content'} =~ m/(class=\\\"second\\\"><span class=\\\"hide-word\\\">\\u0432\\u0456\\u0434<\\\/span> )(.+?)(<\\\/td>)/g) {
       push(@array, $2);
       $i++;
     }
-
     # Parse value of payment
     while ($response_api->{'_content'} =~ m/(<td class=\\\"third\\\">)(.+?)( \\u0433\\u0440\\u043d<\\\/td>)/g) {
       push(@array2, $2);
     }
 
     # Add data to db
-    for (my $value = 0 ; $value < $i ; $value++) {
+    for (my $value = 0; $value < $i; $value++) {
       my $value_date_reg = $array[$value];
       my @value_date;
       @value_date = split(/(.*?)\.(.*?)\.(.*)/, $value_date_reg);
@@ -616,6 +604,7 @@ sub site104 {
 
 }
 
+
 #**********************************************************
 
 =head2 sit_electric($attr)
@@ -639,9 +628,9 @@ sub site_electric {
   use WWW::Curl::Easy;
   use POSIX qw(strftime);
 
+
   #ATTENTION!! IT'S USER ID FOR TESTING, IT NEED TO BE TAKING FROM DB ( ABILLS_USER )
   my $user_id = 4;
-
   #take main data from db by this user_id
   my $list = $Economizer->take_main_data();
   my $login;
@@ -649,76 +638,74 @@ sub site_electric {
   foreach my $line (@$list) {
     my $value = $line->["5"];
     if ($value = $user_id) {
-      $login    = $line->["3"];
+      $login = $line->["3"];
       $password = $line->["4"];
     }
   }
 
   # Clear the db
-  $Economizer->clear_electric(
-    {
-      USER_ID => $user_id
-    }
-  );
-  my $ua       = LWP::UserAgent->new();
-  my $ua_cust  = LWP::UserAgent->new();
-  my $url      = "https://my.oe.if.ua";
-  my $req      = HTTP::Request->new('GET', $url);
+  $Economizer->clear_electric({
+    USER_ID => $user_id
+  });
+  my $ua = LWP::UserAgent->new();
+  my $ua_cust = LWP::UserAgent->new();
+  my $url = "https://my.oe.if.ua";
+  my $req = HTTP::Request->new('GET', $url);
   my $response = $ua->request($req);
 
   # take RequestVerificationToken ( data, which is different after next visitting the websit)
   my $req_token_reg = $response->{'_content'} =~ m/<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"(.*?)\" \/>/;
-  my $req_token     = $1;
+  my $req_token = $1;
 
   # take cookie
-  my $cookie1      = $response->{'_headers'}{'set-cookie'}[0];
-  my $cookie2      = $response->{'_headers'}{'set-cookie'}[1];
-  my $cookie3      = $response->{'_headers'}{'set-cookie'}[2];
-  my $cookie4      = $response->{'_headers'}{'set-cookie'}[3];
+  my $cookie1 = $response->{'_headers'}{'set-cookie'}[0];
+  my $cookie2 = $response->{'_headers'}{'set-cookie'}[1];
+  my $cookie3 = $response->{'_headers'}{'set-cookie'}[2];
+  my $cookie4 = $response->{'_headers'}{'set-cookie'}[3];
   my $first_cookie = $cookie1 . '; ' . $cookie2 . '; ' . $cookie3 . '; ' . $cookie4;
 
   # authentication by email, passwork and requestVerificationToken
   # my $email    = $login;
   #my $password = $password;
-  my $curl  = WWW::Curl::Easy->new;
+  my $curl = WWW::Curl::Easy->new;
   my $curlf = WWW::Curl::Form->new;
-  $curlf->formadd("Email",                      $login);
-  $curlf->formadd("Password",                   $password);
+  $curlf->formadd("Email", $login);
+  $curlf->formadd("Password", $password);
   $curlf->formadd("__RequestVerificationToken", $req_token);
   $curl->setopt(CURLOPT_HTTPPOST, $curlf);
-  $curl->setopt(CURLOPT_HEADER,   1);
-  $curl->setopt(CURLOPT_URL,      'https://my.oe.if.ua/account/login');
-  $curl->setopt(CURLOPT_COOKIE,   $first_cookie);
+  $curl->setopt(CURLOPT_HEADER, 1);
+  $curl->setopt(CURLOPT_URL, 'https://my.oe.if.ua/account/login');
+  $curl->setopt(CURLOPT_COOKIE, $first_cookie);
   my $response_body;
 
   $curl->setopt(CURLOPT_WRITEDATA, \$response_body);
 
-  my $retcode           = $curl->perform;
+  my $retcode = $curl->perform;
   my $applic_cookie_reg = $response_body =~ m/.AspNet.ApplicationCookie=(.*?)HttpOnly/;
-  my $applic_cookie     = $1;
+  my $applic_cookie = $1;
 
   # try to connect with website by url, cookie;
   my $curl_cust = WWW::Curl::Easy->new;
 
-  $curl_cust->setopt(CURLOPT_URL,    'https://my.oe.if.ua/consumers');
+  $curl_cust->setopt(CURLOPT_URL, 'https://my.oe.if.ua/consumers');
   $curl_cust->setopt(CURLOPT_COOKIE, $first_cookie . ';' . ".AspNet.ApplicationCookie=$applic_cookie");
   my $response_body_cust;
   $curl_cust->setopt(CURLOPT_WRITEDATA, \$response_body_cust);
 
   # Starts the actual request
 
-  my $retcode_cust        = $curl_cust->perform;
-  my $i                   = 0;
+  my $retcode_cust = $curl_cust->perform;
+  my $i = 0;
   my @array_number_insite = ();
-  my @array_number_calc   = ();
-  my @array_user          = ();
+  my @array_number_calc = ();
+  my @array_user = ();
 
   # Parse data of users
 
   while ($response_body_cust =~ m/(<a href="#" onclick='removeConsumer\(")(.*?)(", ")(.*?)(, )(.*?)("\);'>)/g) {
     push(@array_number_insite, $2);
-    push(@array_number_calc,   $4);
-    push(@array_user,          $6);
+    push(@array_number_calc, $4);
+    push(@array_user, $6);
     $i++;
   }
 
@@ -733,13 +720,13 @@ sub site_electric {
       caption    => $lang{Consomers},
       border     => 2,
       title      => [ $lang{Consomers}, '-', '-' ],
-      cols_align => ['center'],
+      cols_align => [ 'center' ],
       ID         => 'COMPANY_ID',
     }
   );
 
   # show buttons with all users
-  for ($j = 0 ; $j < $i ; $j++) {
+  for ($j = 0; $j < $i; $j++) {
     push(@link, 'profile' . $j);
     push(@array, $html->button($array_user[$j], "index=$index&sid=$sid&id=$j&clickbutton=1", { class => 'btn btn-sm btn-default' }));
   }
@@ -750,24 +737,23 @@ sub site_electric {
   my $datestring = strftime "%F", localtime;
 
   $datestring =~ m/(.*?)-(.*?)-/;
-  my $nowtime  = $1 . $2;
+  my $nowtime = $1 . $2;
   my $timepart = '{"PeriodFrom":201601,"PeriodTo":' . "$nowtime" . ',"ViewMode":0}';
   if ($FORM{clickbutton}) {
     my $cons_id = $FORM{id};
-    my $userid  = $array_number_insite[$cons_id];
+    my $userid = $array_number_insite[$cons_id];
 
     # parse html and take payment data
 
     my $curl_cons = WWW::Curl::Easy->new;
-    $curl_cons->setopt(CURLOPT_URL,    "https://my.oe.if.ua/consumers/$userid/balance");
+    $curl_cons->setopt(CURLOPT_URL, "https://my.oe.if.ua/consumers/$userid/balance");
     $curl_cons->setopt(CURLOPT_COOKIE, $first_cookie . ';' . ".AspNet.ApplicationCookie=$applic_cookie" . ';ESOPeriods_2= %7B%22PeriodFrom%22%3A201601%2C%22PeriodTo%22%3A' . $nowtime . '%2C%22ViewMode%22%3A0%7D%0A');
     my $response_body_cons;
     $curl_cons->setopt(CURLOPT_WRITEDATA, \$response_body_cons);
     my $retcode_cons = $curl_cons->perform;
     while ($response_body_cons =~
-m/<tr >\s+<td class="text-center">\s+ <strong>\s+(.*?)\.(.*?)\s+<\/strong>\s+<\/td>\s+<td class="text-right"> (.*?)\.(.*?)<\/td>\s+<td>\s+<p>((.*?)<span class="pull-right"> (.*?)\.(.*?)<\/span>  <\/p>\s+)?(<p>(.*?)<span class="pull-right"> (.*?)\.(.*?)<\/span>  <\/p>\s+)?((<p>)(.*?)(<span class="pull-right">) (.*?)\.(.*?)<\/span>  <\/p>\s+)?(<p>(.*?)<span class="pull-right">(.*?)\.(.*?)<\/span>  <\/p>\s+)<p class="pull-right">\s+<a class="detailLink" (.*?)(\s+<strong class="text-danger">Докладніше<\/strong>\s+<i class="fa fa-arrow-down"><\/i>\s+<\/a>\s+<\/p>\s+<\/td>\s+<td class="text-right">\s+)(.*?)\.(.*?)\s+<\/td>\s+<td class="text-right">\s+(.*?)\.(.*?)\s+<\/td>\s+<\/tr>/g
-    )
-    {
+      m/<tr >\s+<td class="text-center">\s+ <strong>\s+(.*?)\.(.*?)\s+<\/strong>\s+<\/td>\s+<td class="text-right"> (.*?)\.(.*?)<\/td>\s+<td>\s+<p>((.*?)<span class="pull-right"> (.*?)\.(.*?)<\/span>  <\/p>\s+)?(<p>(.*?)<span class="pull-right"> (.*?)\.(.*?)<\/span>  <\/p>\s+)?((<p>)(.*?)(<span class="pull-right">) (.*?)\.(.*?)<\/span>  <\/p>\s+)?(<p>(.*?)<span class="pull-right">(.*?)\.(.*?)<\/span>  <\/p>\s+)<p class="pull-right">\s+<a class="detailLink" (.*?)(\s+<strong class="text-danger">Докладніше<\/strong>\s+<i class="fa fa-arrow-down"><\/i>\s+<\/a>\s+<\/p>\s+<\/td>\s+<td class="text-right">\s+)(.*?)\.(.*?)\s+<\/td>\s+<td class="text-right">\s+(.*?)\.(.*?)\s+<\/td>\s+<\/tr>/g
+    ) {
 
       # add electric's payment data to db
       $Economizer->add_user_money_electric(
@@ -784,12 +770,13 @@ m/<tr >\s+<td class="text-center">\s+ <strong>\s+(.*?)\.(.*?)\s+<\/strong>\s+<\/
 
     # Take data from db and show it in table
 
+
     my $table_money = $html->table(
       {
-        width   => '100%',
-        caption => $lang{PAYMENT_HISTORY},
-        border  => 2,
-        title   => [ 'Id', $lang{DATE}, $lang{SALDO}, $lang{ACCRUED}, $lang{PAID}, $lang{REMAINDER}, '-', '-' ],
+        width      => '100%',
+        caption    => $lang{PAYMENT_HISTORY},
+        border     => 2,
+        title      => [ 'Id', $lang{DATE}, $lang{SALDO}, $lang{ACCRUED}, $lang{PAID}, $lang{REMAINDER}, '-', '-' ],
         cols_align => [ 'center', 'center', 'center', 'center', 'center', 'center' ],
         ID         => 'COMPANY_ID',
       }
@@ -808,16 +795,14 @@ m/<tr >\s+<td class="text-center">\s+ <strong>\s+(.*?)\.(.*?)\s+<\/strong>\s+<\/
       push @fields_array, $table_money->addrow(@fields_array);
     }
     print $table_money->show();
-
     # parse html and take counter data of electric
     my $curl_counter = WWW::Curl::Easy->new;
-    $curl_counter->setopt(CURLOPT_URL,    "https://my.oe.if.ua/consumers/$array_number_insite[$FORM{id}]/indexes");
+    $curl_counter->setopt(CURLOPT_URL, "https://my.oe.if.ua/consumers/$array_number_insite[$FORM{id}]/indexes");
     $curl_counter->setopt(CURLOPT_COOKIE, $first_cookie . ';' . ".AspNet.ApplicationCookie=$applic_cookie" . ';ESOPeriods_2= %7B%22PeriodFrom%22%3A201601%2C%22PeriodTo%22%3A' . $nowtime . '%2C%22ViewMode%22%3A0%7D%0A');
     my $response_body_counter;
     $curl_counter->setopt(CURLOPT_WRITEDATA, \$response_body_counter);
     my $retcode_counter = $curl_counter->perform;
     while ($response_body_counter =~ m/<tr >\s+<td rowspan="1">(.*?)<\/td>\s+<td rowspan="1" class="text-center">(.*?)\.(.*?)\.(.*?)<\/td>\s+<td class="text-center">без зони<\/td>\s+<td class="text-right">(.*?)<\/td>\s+<td rowspan="1">(.*?)<\/td>/g) {
-
       # add data counter of electric to db
       $Economizer->add_user_electro_counter(
         {
@@ -828,20 +813,18 @@ m/<tr >\s+<td class="text-center">\s+ <strong>\s+(.*?)\.(.*?)\s+<\/strong>\s+<\/
         }
       );
     }
-
     # Take data from db and show it in table
     my $table_counter = $html->table(
       {
-        width   => '100%',
-        caption => $lang{COUNTER_HISTORY},
-        border  => 2,
-        title   => [ 'ID', $lang{DATE}, $lang{COUNTER_NUMBER}, $lang{INDICATOR}, '-', '-' ],
+        width      => '100%',
+        caption    => $lang{COUNTER_HISTORY},
+        border     => 2,
+        title      => [ 'ID', $lang{DATE}, $lang{COUNTER_NUMBER}, $lang{INDICATOR}, '-', '-' ],
         cols_align => [ 'center', 'center', 'center', 'center' ],
         ID         => 'COMPANY_ID',
       }
     );
     my $list_counter = $Economizer->take_electro_counter();
-
     # Add data to the table
     foreach my $line (@$list_counter) {
       my @fields_array = ();
@@ -877,7 +860,7 @@ sub add_main {
 
   #check existing data current user
 
-  my $list     = $Economizer->take_main();
+  my $list = $Economizer->take_main();
   my $existing = 'no';
 
   # Add data to the tabl
@@ -906,14 +889,13 @@ sub add_main {
   $html->tpl_show(
     _include('economizer_main', 'Economizer'),
     {
-      ID          => $FORM{ID},
-      INDEX       => $index,
-      LOGIN104    => $html->form_input('LOGIN104', $FORM{LOGIN104}, { OUTPUT2RETURN => 1 }),
-      PASSWORD104 =>,
-      $html->form_input('PASSWORD104', $FORM{PASSWORD104}, { OUTPUT2RETURN => 1 }),
-      LOGIN_ELECTRO    => $html->form_input('LOGIN_ELECTRO',    $FORM{LOGIN_ELECTRO},    { OUTPUT2RETURN => 1 }),
-      PASSWORD_ELECTRO => $html->form_input('PASSWORD_ELECTRO', $FORM{PASSWORD_ELECTRO}, { OUTPUT2RETURN => 1 }),
-      BUTTON_ADD       => $html->form_input("ADD",              $lang{ADD},              { TYPE          => "submit", OUTPUT2RETURN => 1 }),
+      ID               => $FORM{ID},
+      INDEX            => $index,
+      LOGIN104         => $html->form_input('LOGIN104', $FORM{LOGIN104}, { OUTPUT2RETURN => 1 }),
+      PASSWORD104      =>, $html->form_input('PASSWORD104', $FORM{PASSWORD104}, { TYPE => "password",OUTPUT2RETURN => 1 }),
+      LOGIN_ELECTRO    => $html->form_input('LOGIN_ELECTRO', $FORM{LOGIN_ELECTRO}, { OUTPUT2RETURN => 1 }),
+      PASSWORD_ELECTRO => $html->form_input('PASSWORD_ELECTRO', $FORM{PASSWORD_ELECTRO}, { TYPE => "password",OUTPUT2RETURN => 1 }),
+      BUTTON_ADD       => $html->form_input("ADD", $lang{ADD}, { TYPE => "submit", OUTPUT2RETURN => 1 }),
     }
   );
   return 1;
